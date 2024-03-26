@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "dev": "frog dev",
+    "dev:proxy": "frog dev --proxy ngrok",
+    "wrangler:dev": "wrangler dev src/index.ts",
+    "wrangler:deploy": "wrangler deploy --minify src/index.ts"
+  },
+  "dependencies": {
+    "frog": "^0.7.13",
+    "hono": "^4.0.9"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240208.0",
+    "wrangler": "^3.25.0"
+  }
+}
