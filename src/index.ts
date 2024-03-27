@@ -7,6 +7,7 @@ import { finishScreen } from './screens/finish'
 import { getFont } from './fonts'
 import { contributeScreen } from './screens/contribute'
 import { contributeTx } from './transactions/contribute-tx'
+import { approveTx } from './transactions/approve-tx'
 import { approveScreen } from './screens/approve'
 
 export const app = new Frog({
@@ -19,6 +20,7 @@ app.frame('/campaign/:campaignId/approve', approveScreen)
 app.frame('/campaign/:campaignId/finish', finishScreen)
 
 app.transaction('/campaign/:campaignId/contribute/tx', contributeTx)
+app.transaction('/campaign/:campaignId/contribute/approve-tx', approveTx)
 
 devtools(app, { serveStatic })
 
