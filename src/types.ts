@@ -1,8 +1,9 @@
 import { Hex } from 'viem'
 import { base, optimism, zora } from 'viem/chains'
 
-export const supportedChains = [base.id, optimism.id, zora.id]
-type SupportedChain = (typeof supportedChains)[number]
+export const supportedChains = [base, optimism, zora]
+export const supportedChainIds = supportedChains.map((c) => c.id)
+export type SupportedChain = (typeof supportedChains)[number]
 
 export type Campaign = {
   metadata: {
@@ -14,7 +15,7 @@ export type Campaign = {
     description: string
   }
   contract: {
-    chain_id: SupportedChain
+    chain_id: SupportedChain['id']
     txn_state: string
     contract_address: Hex
     txn_hash: Hex

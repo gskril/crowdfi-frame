@@ -4,6 +4,7 @@ import { formatUnits } from 'viem'
 import { backgroundStyles } from '../styles'
 import { getCampaign } from '../crowdfi'
 import { errorScreen } from './error'
+import { getRelativeTimeString } from '../utils'
 
 export const contributeScreen = async (
   c: FrameContext<Env, '/:campaignId/contribute'>
@@ -26,6 +27,8 @@ export const contributeScreen = async (
     BigInt(campaign.status.goal),
     campaign.contract.token.decimals
   )
+
+  const relativeEndTime = getRelativeTimeString(campaign.status.ends_at)
 
   return c.res({
     image: (
@@ -53,8 +56,7 @@ export const contributeScreen = async (
           Started {new Date(campaign.status.starts_at).toLocaleDateString()}
         </span>
         <span>
-          Ends {new Date(campaign.status.ends_at).toLocaleDateString()}{' '}
-          {!isActive && '(no longer active)'}
+          Ends {relativeEndTime} {!isActive && '(no longer active)'}
         </span>
       </div>
     ),
@@ -65,7 +67,11 @@ export const contributeScreen = async (
       <Button.Link href="https://crowdfi.withfabric.xyz/campaign/farcon-2024-pre-commit-4x2ya8uejw8w">
         Visit Fabric
       </Button.Link>,
-      !!isActive && (
+      !isActive ? null : isErc20 ? (
+        // handle ERC20 approval flow
+        <Button action={`/campaign/${campaignId}/approve`}>Contribute</Button>
+      ) : (
+        // handle ETH contribution flow
         <Button.Transaction target={`/campaign/${campaignId}/contribute/tx`}>
           Contribute
         </Button.Transaction>

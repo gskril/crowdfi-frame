@@ -1,4 +1,6 @@
-export const ABI = [
+import { parseAbi } from 'viem'
+
+export const CROWDFi_ABI = [
   {
     inputs: [],
     stateMutability: 'nonpayable',
@@ -822,3 +824,12 @@ export const ABI = [
     type: 'function',
   },
 ] as const
+
+export const ERC20_ABI = parseAbi([
+  'function totalSupply() public view returns (uint256)',
+  'function balanceOf(address _owner) public view returns (uint256 balance)',
+  'function transfer(address _to, uint256 _value) public returns (bool success)',
+  'function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)',
+  'function approve(address _spender, uint256 _value) public returns (bool success)',
+  'function allowance(address _owner, address _spender) public view returns (uint256 remaining)',
+])

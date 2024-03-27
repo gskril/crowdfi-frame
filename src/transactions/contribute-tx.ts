@@ -3,20 +3,20 @@ import { parseUnits, parseEther } from 'viem'
 import { Env } from 'hono/types'
 
 import { getCampaign } from '../crowdfi'
-import { supportedChains } from '../types'
-import { ABI } from '../abi'
+import { supportedChainIds } from '../types'
+import { CROWDFi_ABI } from '../abi'
 
 export const contributeTx = async (
   c: TransactionContext<Env, '/:campaignId/contribute/tx'>
 ) => {
   const { campaignId } = c.req.param()
-  const inputValue = c.inputText
+  const inputValue = c.inputText || c.req.query('inputText')
   if (!inputValue) throw new Error('Invalid input')
 
   const campaign = await getCampaign(campaignId)
   if (!campaign) throw new Error('Campaign not found')
 
-  if (!supportedChains.includes(campaign.contract.chain_id)) {
+  if (!supportedChainIds.includes(campaign.contract.chain_id)) {
     throw new Error('Chain not supported')
   }
 
@@ -26,7 +26,7 @@ export const contributeTx = async (
     return c.contract({
       chainId: `eip155:${campaign.contract.chain_id}`,
       to: campaign.contract.contract_address,
-      abi: ABI,
+      abi: CROWDFi_ABI,
       functionName: 'contributeERC20',
       args: [parseUnits(inputValue, campaign.contract.token.decimals)],
     })
@@ -36,7 +36,7 @@ export const contributeTx = async (
   return c.contract({
     chainId: `eip155:${campaign.contract.chain_id}`,
     to: campaign.contract.contract_address,
-    abi: ABI,
+    abi: CROWDFi_ABI,
     functionName: 'contributeEth',
     value: parseEther(inputValue),
   })
