@@ -64,7 +64,9 @@ export const contributeScreen = async (
       <TextInput
         placeholder={`Contribution Amount (${campaign.contract.token.symbol})`}
       />,
-      <Button.Link href="https://crowdfi.withfabric.xyz/campaign/farcon-2024-pre-commit-4x2ya8uejw8w">
+      <Button.Link
+        href={`https://crowdfi.withfabric.xyz/campaign/${campaign.metadata.slug}`}
+      >
         Visit Fabric
       </Button.Link>,
       !isActive ? null : isErc20 ? (
