@@ -18,26 +18,27 @@ export const contributeScreen = async (
   const isErc20 = campaign.contract.token.erc20
   const isActive = campaign.status.ends_at > Date.now()
 
-  const normalizedDeposits = formatUnits(
-    BigInt(campaign.status.deposits),
-    campaign.contract.token.decimals
-  )
+  const normalizedDeposits = Number(
+    formatUnits(
+      BigInt(campaign.status.deposits),
+      campaign.contract.token.decimals
+    )
+  ).toFixed(2)
 
-  const normalizedGoal = formatUnits(
-    BigInt(campaign.status.goal),
-    campaign.contract.token.decimals
-  )
+  const normalizedGoal = Number(
+    formatUnits(BigInt(campaign.status.goal), campaign.contract.token.decimals)
+  ).toFixed(2)
 
   const relativeEndTime = getRelativeTimeString(campaign.status.ends_at)
 
   return c.res({
     image: (
-      <div
-        style={{
-          ...backgroundStyles,
-        }}
-      >
-        <span style={{ fontSize: 92 }}>{campaign.metadata.title}</span>
+      <div style={{ ...backgroundStyles }}>
+        <span style={{ fontSize: 64, paddingBottom: 64 }}>
+          {campaign.metadata.title}
+        </span>
+
+        <span>{campaign.status.num_contributors} contributors</span>
 
         {isOpenEnded ? (
           <span>
@@ -51,12 +52,17 @@ export const contributeScreen = async (
           </span>
         )}
 
-        <span>{campaign.status.num_contributors} contributors</span>
         <span>
-          Started {new Date(campaign.status.starts_at).toLocaleDateString()}
+          Started {new Date(campaign.status.starts_at).toLocaleDateString()},
+          ends {relativeEndTime} {!isActive && '(no longer active)'}
         </span>
+
         <span>
-          Ends {relativeEndTime} {!isActive && '(no longer active)'}
+          {formatUnits(
+            BigInt(campaign.contract.min_deposit),
+            campaign.contract.token.decimals
+          )}{' '}
+          {campaign.contract.token.symbol} min contribution
         </span>
       </div>
     ),

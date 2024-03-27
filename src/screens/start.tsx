@@ -13,12 +13,9 @@ export const homeScreen = async (c: FrameContext<Env, '/:campaignId'>) => {
 
   return c.res({
     image: (
-      <div
-        style={{
-          ...backgroundStyles,
-          backgroundImage: `url(${campaign.metadata.photo_urls[0]})`,
-        }}
-      />
+      <div style={{ ...backgroundStyles }}>
+        <span>Contribute to {campaign.metadata.title} on Fabric</span>
+      </div>
     ),
     intents: [
       <Button action={`/campaign/${campaignId}/contribute`}>

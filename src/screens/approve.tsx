@@ -27,35 +27,29 @@ export const approveScreen = async (
     image: (
       <div style={{ ...backgroundStyles }}>
         <span>
-          First allow the smart contract to access your {inputValue}{' '}
+          First, allow the smart contract to spend {inputValue}{' '}
           {campaign.contract.token.symbol}
         </span>
-        <span>Then contribute</span>
+        <span>Then, come back to contribute the same amount</span>
+
+        <span style={{ paddingTop: 64 }}>
+          I know this is odd, I need to fix it
+        </span>
       </div>
     ),
     intents: [
       <Button.Transaction
-        target={`/campaign/${campaignId}/contribute/approve-tx?amount=${inputValue}`}
         action={`/campaign/${campaignId}/contribute`}
+        target={`/campaign/${campaignId}/contribute/approve-tx?amount=${inputValue}`}
       >
         Approve
       </Button.Transaction>,
       <Button.Transaction
+        action={`/campaign/${campaignId}/finish`}
         target={`/campaign/${campaignId}/contribute/tx?inputText=${inputValue}`}
       >
         Contribute
       </Button.Transaction>,
     ],
   })
-
-  // return c.res({
-  //   image: (
-  //     <div style={{ ...backgroundStyles }}>
-  //       <span>
-  //         Contribute {inputValue} {campaign.contract.token.symbol}
-  //       </span>
-  //     </div>
-  //   ),
-  //   intents: [],
-  // })
 }
