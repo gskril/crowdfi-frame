@@ -6,7 +6,7 @@ export const finishScreen = async (c: FrameContext) => {
   return c.res({
     image: (
       <div style={{ ...backgroundStyles }}>
-        <span>End</span>
+        <span>Thanks for contributing!</span>
       </div>
     ),
   })

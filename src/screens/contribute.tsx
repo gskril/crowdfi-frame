@@ -80,7 +80,10 @@ export const contributeScreen = async (
         <Button action={`/campaign/${campaignId}/approve`}>Contribute</Button>
       ) : (
         // handle ETH contribution flow
-        <Button.Transaction target={`/campaign/${campaignId}/contribute/tx`}>
+        <Button.Transaction
+          action={`/campaign/${campaignId}/finish`}
+          target={`/campaign/${campaignId}/contribute/tx`}
+        >
           Contribute
         </Button.Transaction>
       ),
