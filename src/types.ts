@@ -1,7 +1,7 @@
 import { Hex } from 'viem'
-import { base, optimism, zora } from 'viem/chains'
+import { mainnet, base, optimism, zora } from 'viem/chains'
 
-export const supportedChains = [base, optimism, zora]
+export const supportedChains = [mainnet, base, optimism, zora]
 export const supportedChainIds = supportedChains.map((c) => c.id)
 export type SupportedChain = (typeof supportedChains)[number]
 

@@ -1,5 +1,5 @@
 import { TransactionContext } from 'frog'
-import { parseUnits, parseEther } from 'viem'
+import { parseEther, formatUnits } from 'viem'
 import { Env } from 'hono/types'
 
 import { getCampaign } from '../crowdfi'
@@ -10,26 +10,20 @@ export const contributeTx = async (
   c: TransactionContext<Env, '/:campaignId/contribute/tx'>
 ) => {
   const { campaignId } = c.req.param()
-  const inputValue = c.inputText || c.req.query('inputText')
-  if (!inputValue) throw new Error('Invalid input')
 
   const campaign = await getCampaign(campaignId)
   if (!campaign) throw new Error('Campaign not found')
 
+  // Set the default input value to the minimum deposit amount
+  const inputValue =
+    c.inputText ||
+    formatUnits(
+      BigInt(campaign.contract.min_deposit),
+      campaign.contract.token.decimals
+    )
+
   if (!supportedChainIds.includes(campaign.contract.chain_id)) {
     throw new Error('Chain not supported')
-  }
-
-  // Handle ERC20 contributions
-  // TODO: handle approval flow
-  if (campaign.contract.token.erc20) {
-    return c.contract({
-      chainId: `eip155:${campaign.contract.chain_id}`,
-      to: campaign.contract.contract_address,
-      abi: CROWDFi_ABI,
-      functionName: 'contributeERC20',
-      args: [parseUnits(inputValue, campaign.contract.token.decimals)],
-    })
   }
 
   // Handle ETH contributions

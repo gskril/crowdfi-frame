@@ -1,3 +1,5 @@
+import { formatUnits } from 'viem'
+
 /**
  * Convert a date to a relative time string, such as
  * "a minute ago", "in 2 hours", "yesterday", "3 months ago", etc.
@@ -44,4 +46,11 @@ export function getRelativeTimeString(date: Date | number): string {
   // Intl.RelativeTimeFormat do its magic
   const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
   return rtf.format(Math.floor(deltaSeconds / divisor), units[unitIndex])
+}
+
+export function formatValue(value: number, decimals: number) {
+  return new Intl.NumberFormat('en-US', {
+    unitDisplay: 'short',
+    maximumFractionDigits: 2,
+  }).format(Number(formatUnits(BigInt(value), decimals)))
 }

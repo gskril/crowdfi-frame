@@ -1,14 +1,18 @@
 export const backgroundStyles: Hono.CSSProperties = {
-  color: '#000',
+  color: '#FFF',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
   justifyContent: 'center',
-  textAlign: 'center',
-  gap: 20,
-  fontSize: 42,
+  gap: 40,
+  fontSize: 68,
   width: '100%',
   height: '100%',
-  backgroundColor: '#FFF',
+  backgroundColor: '#8800FF',
   backgroundSize: '100%',
+  padding: 100,
+}
+
+export const authorStyles: Hono.CSSProperties = {
+  fontSize: 28,
+  opacity: 0.72,
 }

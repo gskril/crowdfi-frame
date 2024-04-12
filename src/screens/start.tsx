@@ -1,9 +1,10 @@
 import { Button, FrameContext } from 'frog'
 import { Env } from 'hono/types'
 
-import { backgroundStyles } from '../styles'
+import { authorStyles, backgroundStyles } from '../styles'
 import { getCampaign } from '../crowdfi'
 import { errorScreen } from './error'
+import { Logo } from '../logo'
 
 export const homeScreen = async (c: FrameContext<Env, '/:campaignId'>) => {
   const { campaignId } = c.req.param()
@@ -13,8 +14,14 @@ export const homeScreen = async (c: FrameContext<Env, '/:campaignId'>) => {
 
   return c.res({
     image: (
-      <div style={{ ...backgroundStyles }}>
-        <span>Contribute to {campaign.metadata.title} on Fabric</span>
+      <div style={backgroundStyles}>
+        <span>{campaign.metadata.title}</span>
+
+        <span style={authorStyles}>
+          {campaign.creator.ens_name || campaign.creator.name}
+        </span>
+
+        <Logo />
       </div>
     ),
     intents: [
