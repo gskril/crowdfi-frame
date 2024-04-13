@@ -29,10 +29,7 @@ export const contributeScreen = async (
     campaign.contract.token.decimals
   )
 
-  const minimumContribution = formatUnits(
-    BigInt(campaign.contract.min_deposit),
-    campaign.contract.token.decimals
-  )
+  const { num_contributors } = campaign.status
 
   return c.res({
     image: (
@@ -59,19 +56,19 @@ export const contributeScreen = async (
           {campaign.creator.ens_name || campaign.creator.name}
         </span>
 
-        <span style={{ fontSize: 34 }}>
-          {campaign.status.num_contributors} contributor
-          {campaign.status.num_contributors === 1 ? '' : 's'}
-        </span>
+        {num_contributors > 0 && (
+          <span style={{ fontSize: 34 }}>
+            {num_contributors} contributor
+            {num_contributors === 1 ? '' : 's'}
+          </span>
+        )}
 
         <Logo />
       </div>
     ),
     intents: [
       isErc20 ? null : isActive ? (
-        <TextInput
-          placeholder={`Amount (at least ${minimumContribution} ${campaign.contract.token.symbol})`}
-        />
+        <TextInput placeholder={`Contribution Amount (ETH)`} />
       ) : null,
       <Button.Link
         href={`https://crowdfi.withfabric.xyz/campaign/${campaign.metadata.slug}`}
