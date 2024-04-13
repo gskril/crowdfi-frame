@@ -45,7 +45,13 @@ export const contributeScreen = async (
           <span style={{ opacity: 0.72 }}>
             / {isOpenEnded ? '∞' : normalizedGoal}{' '}
           </span>
-          <span style={{ fontSize: 50, opacity: 0.72 }}>
+          <span
+            style={{
+              fontSize: 50,
+              opacity: 0.72,
+              paddingBottom: isOpenEnded ? undefined : 5,
+            }}
+          >
             {campaign.contract.token.symbol}
           </span>
         </div>
@@ -57,7 +63,7 @@ export const contributeScreen = async (
         </span>
 
         {num_contributors > 0 && (
-          <span style={{ fontSize: 34 }}>
+          <span style={{ fontSize: 34, fontFamily: 'normal' }}>
             {num_contributors} contributor
             {num_contributors === 1 ? '' : 's'}
           </span>

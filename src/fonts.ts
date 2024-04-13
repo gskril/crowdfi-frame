@@ -9,20 +9,22 @@ export interface FontOptions {
   lang?: string
 }
 
-export async function getFont(font: 'inter' | 'satoshi' | 'gilroy') {
+export async function getFont(font: 'normal' | 'bold') {
   let fontData: ArrayBuffer
   // This should be a relative URL from the Worker but for some reason I can't get that working so this will do 🤷‍♂️
-  const baseUrl = 'https://github.com/gskril/frames/raw/main/assets/fonts'
+  const baseUrl = 'https://github.com/gskril/crowdfi-frame/raw/main/assets'
 
-  if (font === 'satoshi') {
-    fontData = await fetchFont(`${baseUrl}/Satoshi-Bold.otf`)
-  } else if (font === 'gilroy') {
-    fontData = await fetchFont(`${baseUrl}/Gilroy-ExtraBold.otf`)
+  if (font === 'bold') {
+    fontData = await fetchFont(`${baseUrl}/ABCDiatypeVariable-600.ttf`)
   } else {
-    fontData = await fetchFont(`${baseUrl}/Inter-Medium.otf`)
+    fontData = await fetchFont(`${baseUrl}/ABCDiatypeVariable-400.ttf`)
   }
 
-  return { name: font, data: fontData, style: 'normal' } satisfies FontOptions
+  return {
+    name: font,
+    data: fontData,
+    style: 'normal',
+  } satisfies FontOptions
 }
 
 async function fetchFont(url: string) {
