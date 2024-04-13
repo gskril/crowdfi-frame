@@ -4,14 +4,14 @@ import { serveStatic } from 'frog/serve-static'
 
 import { homeScreen } from './screens/start'
 import { finishScreen } from './screens/finish'
-import { getFont } from './fonts'
+import { getFonts } from './fonts'
 import { contributeScreen } from './screens/contribute'
 import { contributeTx } from './transactions/contribute-tx'
 
 export const app = new Frog({
   browserLocation: 'https://crowdfi.withfabric.xyz/campaign/:campaignId',
   imageOptions: async () => ({
-    fonts: [await getFont('normal'), await getFont('bold')],
+    fonts: await getFonts(),
   }),
 })
 

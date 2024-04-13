@@ -63,7 +63,7 @@ export const contributeScreen = async (
         </span>
 
         {num_contributors > 0 && (
-          <span style={{ fontSize: 34, fontFamily: 'normal' }}>
+          <span style={{ fontSize: 34, fontWeight: '400' }}>
             {num_contributors} contributor
             {num_contributors === 1 ? '' : 's'}
           </span>

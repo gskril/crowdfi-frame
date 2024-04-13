@@ -9,22 +9,27 @@ export interface FontOptions {
   lang?: string
 }
 
-export async function getFont(font: 'normal' | 'bold') {
-  let fontData: ArrayBuffer
+export async function getFonts() {
   // This should be a relative URL from the Worker but for some reason I can't get that working so this will do 🤷‍♂️
-  const baseUrl = 'https://github.com/gskril/crowdfi-frame/raw/main/assets'
+  const baseUrl =
+    'https://github.com/gskril/crowdfi-frame/raw/main/assets/ABCDiatype'
 
-  if (font === 'bold') {
-    fontData = await fetchFont(`${baseUrl}/ABCDiatype-700.ttf`)
-  } else {
-    fontData = await fetchFont(`${baseUrl}/ABCDiatype-400.ttf`)
-  }
+  const weights = [400, 500, 600] satisfies Weight[]
 
-  return {
-    name: font,
-    data: fontData,
-    style: 'normal',
-  } satisfies FontOptions
+  const fontDatas = await Promise.all(
+    weights.map(async (weight) => {
+      return await fetchFont(`${baseUrl}-${weight}.ttf`)
+    })
+  )
+
+  return fontDatas.map((data, i) => {
+    return {
+      name: 'ABCDiatype',
+      data,
+      weight: weights[i],
+      style: 'normal',
+    } satisfies FontOptions
+  })
 }
 
 async function fetchFont(url: string) {

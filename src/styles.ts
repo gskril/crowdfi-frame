@@ -10,11 +10,11 @@ export const backgroundStyles: Hono.CSSProperties = {
   backgroundColor: '#8800FF',
   backgroundSize: '100%',
   padding: 100,
-  fontFamily: 'bold',
+  fontWeight: '600',
 }
 
 export const authorStyles: Hono.CSSProperties = {
   fontSize: 28,
   opacity: 0.72,
-  fontFamily: 'normal',
+  fontWeight: '400',
 }
