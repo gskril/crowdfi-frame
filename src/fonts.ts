@@ -15,9 +15,9 @@ export async function getFont(font: 'normal' | 'bold') {
   const baseUrl = 'https://github.com/gskril/crowdfi-frame/raw/main/assets'
 
   if (font === 'bold') {
-    fontData = await fetchFont(`${baseUrl}/ABCDiatypeVariable-600.ttf`)
+    fontData = await fetchFont(`${baseUrl}/ABCDiatype-700.ttf`)
   } else {
-    fontData = await fetchFont(`${baseUrl}/ABCDiatypeVariable-400.ttf`)
+    fontData = await fetchFont(`${baseUrl}/ABCDiatype-400.ttf`)
   }
 
   return {
