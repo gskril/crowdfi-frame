@@ -9,6 +9,7 @@ import { contributeScreen } from './screens/contribute'
 import { contributeTx } from './transactions/contribute-tx'
 
 export const app = new Frog({
+  browserLocation: 'https://crowdfi.withfabric.xyz/campaign/:campaignId',
   imageOptions: async () => ({ fonts: [await getFont('satoshi')] }),
 })
 
