@@ -1,5 +1,4 @@
 import { Button, Env, FrameContext, TextInput } from 'frog'
-import { formatUnits } from 'viem'
 
 import { authorStyles, backgroundStyles } from '../styles'
 import { getCampaign } from '../crowdfi'
