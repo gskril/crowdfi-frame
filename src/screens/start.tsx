@@ -6,7 +6,9 @@ import { getCampaign } from '../crowdfi'
 import { errorScreen } from './error'
 import { Logo } from '../logo'
 
-export const homeScreen = async (c: FrameContext<Env, '/:campaignId'>) => {
+export const homeScreen = async (
+  c: FrameContext<Env, '/campaign/:campaignId'>
+) => {
   const { campaignId } = c.req.param()
 
   const campaign = await getCampaign(campaignId)
@@ -14,7 +16,12 @@ export const homeScreen = async (c: FrameContext<Env, '/:campaignId'>) => {
 
   return c.res({
     image: (
-      <div style={backgroundStyles}>
+      <div
+        style={{
+          ...backgroundStyles,
+          backgroundColor: campaign.quilt.background,
+        }}
+      >
         <span>{campaign.metadata.title}</span>
 
         <span style={authorStyles}>

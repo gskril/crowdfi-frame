@@ -7,7 +7,7 @@ import { formatValue } from '../utils'
 import { Logo } from '../logo'
 
 export const contributeScreen = async (
-  c: FrameContext<Env, '/:campaignId/contribute'>
+  c: FrameContext<Env, '/campaign/:campaignId/contribute'>
 ) => {
   const { campaignId } = c.req.param()
 
@@ -32,7 +32,12 @@ export const contributeScreen = async (
 
   return c.res({
     image: (
-      <div style={backgroundStyles}>
+      <div
+        style={{
+          ...backgroundStyles,
+          backgroundColor: campaign.quilt.background,
+        }}
+      >
         <div
           style={{
             display: 'flex',
